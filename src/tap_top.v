@@ -56,8 +56,6 @@ module tap_top (
   memory_sel_o,
   fifo_sel_o,
   confreg_sel_o,
-  clk_byp_sel_o,
-  observ_sel_o,
 
   // TDO signal that is connected to TDI of sub-modules.
   scan_in_o,
@@ -65,9 +63,7 @@ module tap_top (
   // TDI signals from sub-modules
   memory_out_i,     // from reg1 module
   fifo_out_i,       // from reg2 module
-  confreg_out_i,     // from reg3 module
-  clk_byp_out_i,
-  observ_out_i
+  confreg_out_i     // from reg3 module
 );
 
 
@@ -88,8 +84,6 @@ output  capture_dr_o;
 output  memory_sel_o;
 output  fifo_sel_o;
 output  confreg_sel_o;
-output  clk_byp_sel_o;
-output  observ_sel_o;
 
 // TDO signal that is connected to TDI of sub-modules.
 output  scan_in_o;
@@ -98,8 +92,6 @@ output  scan_in_o;
 input   memory_out_i;      // from reg1 module
 input   fifo_out_i;    // from reg2 module
 input   confreg_out_i;     // from reg4 module
-input   clk_byp_out_i;
-input   observ_out_i;
 
 
 // Registers
@@ -144,7 +136,6 @@ assign fifo_sel_o = fifo_sel;
 assign confreg_sel_o = confreg_sel;
 
 assign clk_byp_sel_o  = clk_byp_sel;
-assign observ_sel_o   = observ_sel;
 
 
 always @ (posedge tck_i)
@@ -543,7 +534,6 @@ begin
         `REG2:              tdo_comb = fifo_out_i;        // REG2
         `REG3:              tdo_comb = confreg_out_i;     // REG3
         `REG_CLK_BYP:       tdo_comb = confreg_out_i;     // REG4
-        `REG_OBSERV:        tdo_comb = clk_byp_out_i;     // REG5
         `BYPASS:            tdo_comb = bypassed_tdo;     // BYPASS
         default:            tdo_comb = bypassed_tdo;      // BYPASS instruction
       endcase
